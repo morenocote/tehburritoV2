@@ -7,7 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import heroTacos from "@/assets/hero-tacos.jpg";
 import restaurant from "@/assets/restaurant.jpg";
 import catering from "@/assets/catering.jpg";
-import { restaurantMenu, foodTruckMenu, MenuCategory } from "@/data/menuData";
+import { useMenu } from "@/hooks/useMenu";
+import { Loader2 } from "lucide-react";
 
 const menuImages = [heroTacos, restaurant, catering];
 
@@ -16,23 +17,14 @@ const tables = Array.from({ length: 20 }, (_, i) => ({
   name: `Table ${i + 1}`,
 }));
 
-type MenuType = "restaurant" | "foodtruck";
-
 const Menu = () => {
-  const [menuType, setMenuType] = useState<MenuType>("restaurant");
+  const { menu: currentMenu, loading, error } = useMenu();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedTable, setSelectedTable] = useState<string>("");
-
-  const currentMenu: MenuCategory[] = menuType === "restaurant" ? restaurantMenu : foodTruckMenu;
 
   const filteredCategories = selectedCategory === "all"
     ? currentMenu
     : currentMenu.filter((cat) => cat.id === selectedCategory);
-
-  const handleMenuTypeChange = (type: MenuType) => {
-    setMenuType(type);
-    setSelectedCategory("all");
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -64,34 +56,6 @@ const Menu = () => {
         </div>
       </section>
 
-      {/* Menu Type Toggle */}
-      <section className="py-6 bg-background border-b border-border">
-        <div className="container-custom">
-          <div className="flex justify-center gap-4">
-            <button
-              onClick={() => handleMenuTypeChange("restaurant")}
-              className={`px-6 py-3 rounded-full text-base md:text-lg font-semibold transition-all ${
-                menuType === "restaurant"
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
-              }`}
-            >
-              🍽️ Restaurant Menu
-            </button>
-            <button
-              onClick={() => handleMenuTypeChange("foodtruck")}
-              className={`px-6 py-3 rounded-full text-base md:text-lg font-semibold transition-all ${
-                menuType === "foodtruck"
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
-              }`}
-            >
-              🚚 Food Truck Menu
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* Category Filter & Table Select */}
       <section className="py-6 md:py-8 bg-background border-b border-border sticky top-16 md:top-20 z-30">
         <div className="container-custom">
@@ -101,23 +65,21 @@ const Menu = () => {
               <div className="flex gap-2 md:gap-3 pb-2 lg:pb-0 min-w-max lg:flex-wrap lg:justify-center">
                 <button
                   onClick={() => setSelectedCategory("all")}
-                  className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm md:text-base font-medium transition-all whitespace-nowrap ${
-                    selectedCategory === "all"
+                  className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm md:text-base font-medium transition-all whitespace-nowrap ${selectedCategory === "all"
                       ? "bg-primary text-primary-foreground shadow-lg"
                       : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                  }`}
+                    }`}
                 >
                   All
                 </button>
-                {currentMenu.map((category) => (
+                {!loading && currentMenu.map((category) => (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm md:text-base font-medium transition-all whitespace-nowrap ${
-                      selectedCategory === category.id
+                    className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm md:text-base font-medium transition-all whitespace-nowrap ${selectedCategory === category.id
                         ? "bg-primary text-primary-foreground shadow-lg"
                         : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                    }`}
+                      }`}
                   >
                     {category.name}
                   </button>
@@ -144,51 +106,72 @@ const Menu = () => {
         </div>
       </section>
 
-      {/* Menu */}
-      <section className="py-12 md:py-20 bg-background">
+      {/* Menu Content */}
+      <section className="py-12 md:py-20 bg-background min-h-[400px]">
         <div className="container-custom">
-          {filteredCategories.map((category, catIndex) => (
-            <div key={category.id} className="mb-12 md:mb-16 last:mb-0">
-              <div className="text-center mb-8 md:mb-10">
-                <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-2">
-                  {category.name}
-                </h2>
-                <p className="text-muted-foreground text-sm md:text-base">{category.description}</p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
-                {category.items.map((item, itemIndex) => (
-                  <div
-                    key={itemIndex}
-                    className="bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-card transition-all hover:-translate-y-1 group"
-                  >
-                    <div className="relative h-40 md:h-48 overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      {item.price && (
-                        <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-3 py-1 rounded-full font-display text-lg md:text-xl shadow-lg">
-                          {item.price}
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-4 md:p-5">
-                      <h3 className="font-semibold text-base md:text-lg text-foreground mb-1">{item.name}</h3>
-                      <p className="text-muted-foreground text-xs md:text-sm line-clamp-2">{item.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {catIndex < filteredCategories.length - 1 && (
-                <div className="mt-12 md:mt-16 flex justify-center">
-                  <div className="w-24 h-1 bg-secondary rounded-full" />
-                </div>
-              )}
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
+              <p className="text-muted-foreground">Cargando el delicioso menú...</p>
             </div>
-          ))}
+          ) : error ? (
+            <div className="text-center py-20">
+              <p className="text-destructive font-semibold mb-2">Error al cargar el menú</p>
+              <p className="text-muted-foreground">{error}. Asegúrate de tener conexión a internet.</p>
+            </div>
+          ) : filteredCategories.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-muted-foreground">No hay platos disponibles en esta categoría.</p>
+            </div>
+          ) : (
+            filteredCategories.map((category, catIndex) => (
+              <div key={category.id} className="mb-12 md:mb-16 last:mb-0">
+                <div className="text-center mb-8 md:mb-10">
+                  <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-2">
+                    {category.name}
+                  </h2>
+                  {category.description && (
+                    <p className="text-muted-foreground text-sm md:text-base">{category.description}</p>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
+                  {category.items.map((item, itemIndex) => (
+                    <div
+                      key={itemIndex}
+                      className="bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-card transition-all hover:-translate-y-1 group"
+                    >
+                      <div className="relative h-40 md:h-48 overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = heroTacos; // Fallback image
+                          }}
+                        />
+                        {item.price && (
+                          <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-3 py-1 rounded-full font-display text-lg md:text-xl shadow-lg">
+                            {item.price}
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4 md:p-5">
+                        <h3 className="font-semibold text-base md:text-lg text-foreground mb-1">{item.name}</h3>
+                        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {catIndex < filteredCategories.length - 1 && (
+                  <div className="mt-12 md:mt-16 flex justify-center">
+                    <div className="w-24 h-1 bg-secondary rounded-full" />
+                  </div>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </section>
 
