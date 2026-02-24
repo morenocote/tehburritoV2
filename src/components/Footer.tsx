@@ -135,11 +135,10 @@ const Footer = () => {
                 <Clock size={18} className="text-secondary mt-1 flex-shrink-0" />
                 <div className="text-background/80 text-sm md:text-base">
                   <p className="font-medium text-background">Restaurant</p>
-                  <p>Mon - Tue: 11am - 10pm</p>
+                  <p>Mon - Tue: 9am - 7pm</p>
                   <p className="text-secondary/80">Wed: Closed</p>
-                  <p>Thu: 11am - 10pm</p>
-                  <p>Fri - Sat: 11am - 11pm</p>
-                  <p>Sun: 12pm - 9pm</p>
+                  <p>Thu - Sat: 9am - 9pm</p>
+                  <p>Sun: 9am - 8pm</p>
                 </div>
               </li>
             </ul>

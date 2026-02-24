@@ -48,7 +48,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground text-base md:text-lg mb-1">Address</h3>
-                    <a 
+                    <a
                       href="https://www.google.com/maps/search/?api=1&query=3231+17+Ave+SE,+Calgary,+AB+T2A+0P9"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -92,11 +92,10 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-foreground text-base md:text-lg mb-1">Hours</h3>
                     <div className="text-muted-foreground space-y-1 text-sm md:text-base">
-                      <p>Monday - Tuesday: 11:00 AM - 10:00 PM</p>
+                      <p>Monday - Tuesday: 9:00 AM - 7:00 PM</p>
                       <p className="text-primary font-medium">Wednesday: Closed</p>
-                      <p>Thursday: 11:00 AM - 10:00 PM</p>
-                      <p>Friday - Saturday: 11:00 AM - 11:00 PM</p>
-                      <p>Sunday: 12:00 PM - 9:00 PM</p>
+                      <p>Thursday - Saturday: 9:00 AM - 9:00 PM</p>
+                      <p>Sunday: 9:00 AM - 8:00 PM</p>
                     </div>
                   </div>
                 </div>
