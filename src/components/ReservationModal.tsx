@@ -78,24 +78,24 @@ const ReservationModal = ({ isOpen, onClose, serviceType = "restaurant" }: Reser
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
+
     setIsSubmitting(true);
 
     try {
       const subject = encodeURIComponent(
-        serviceType === "catering" 
-          ? "Catering Quote Request - The Burrito" 
+        serviceType === "catering"
+          ? "Catering Quote Request - The Burrito"
           : serviceType === "foodtruck"
-          ? "Food Truck Order - The Burrito"
-          : "Table Reservation - The Burrito"
+            ? "Food Truck Order - The Burrito"
+            : "Table Reservation - The Burrito"
       );
-      
-      const dishesText = selectedDishes.length > 0 
-        ? `\nSelected Dishes: ${selectedDishes.join(", ")}` 
+
+      const dishesText = selectedDishes.length > 0
+        ? `\nSelected Dishes: ${selectedDishes.join(", ")}`
         : "";
-      
+
       const body = encodeURIComponent(
         `Name: ${formData.name}\n` +
         `Email: ${formData.email}\n` +
@@ -107,7 +107,7 @@ const ReservationModal = ({ isOpen, onClose, serviceType = "restaurant" }: Reser
         `\nMessage: ${formData.message || "N/A"}`
       );
 
-      window.location.href = `mailto:rcwluna@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:theburritomexicanfood@gmail.com?subject=${subject}&body=${body}`;
 
       toast({
         title: "Request Sent!",
@@ -301,11 +301,11 @@ const ReservationModal = ({ isOpen, onClose, serviceType = "restaurant" }: Reser
             className="w-full"
             disabled={isSubmitting}
           >
-            {isSubmitting 
-              ? "Sending..." 
-              : serviceType === "catering" 
-              ? "Request Quote" 
-              : "Confirm Reservation"
+            {isSubmitting
+              ? "Sending..."
+              : serviceType === "catering"
+                ? "Request Quote"
+                : "Confirm Reservation"
             }
           </Button>
         </form>

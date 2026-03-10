@@ -35,13 +35,13 @@ const ReservationForm = ({ serviceType = "restaurant" }: ReservationFormProps) =
 
     try {
       const subject = encodeURIComponent(
-        serviceType === "catering" 
-          ? "Catering Quote Request - The Burrito" 
+        serviceType === "catering"
+          ? "Catering Quote Request - The Burrito"
           : serviceType === "foodtruck"
-          ? "Food Truck Order - The Burrito"
-          : "Table Reservation - The Burrito"
+            ? "Food Truck Order - The Burrito"
+            : "Table Reservation - The Burrito"
       );
-      
+
       const body = encodeURIComponent(
         `Name: ${formData.name}\n` +
         `Email: ${formData.email}\n` +
@@ -52,7 +52,7 @@ const ReservationForm = ({ serviceType = "restaurant" }: ReservationFormProps) =
         `Message: ${formData.message || "N/A"}`
       );
 
-      window.location.href = `mailto:rcwluna@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:theburritomexicanfood@gmail.com?subject=${subject}&body=${body}`;
 
       toast({
         title: "Request Sent!",
@@ -213,11 +213,11 @@ const ReservationForm = ({ serviceType = "restaurant" }: ReservationFormProps) =
           className="w-full h-12 md:h-14 text-base md:text-lg"
           disabled={isSubmitting}
         >
-          {isSubmitting 
-            ? "Sending..." 
-            : serviceType === "catering" 
-            ? "Request Quote" 
-            : "Confirm Reservation"
+          {isSubmitting
+            ? "Sending..."
+            : serviceType === "catering"
+              ? "Request Quote"
+              : "Confirm Reservation"
           }
         </Button>
       </form>
