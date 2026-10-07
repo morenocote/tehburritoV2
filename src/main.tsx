@@ -19,7 +19,17 @@ if ("serviceWorker" in navigator) {
       });
     }
   } else {
-    registerSW({ immediate: true });
+    const updateSW = registerSW({
+      immediate: true,
+      onNeedRefresh() {
+        updateSW(true);
+      },
+      onRegisteredSW(_swUrl, registration) {
+        if (registration) {
+          registration.update();
+        }
+      },
+    });
   }
 }
 

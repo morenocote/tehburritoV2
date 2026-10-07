@@ -22,7 +22,7 @@ const slides: Slide[] = [
   {
     image: restaurant1,
     title: "Restaurant",
-    subtitle: "Authentic Mexican Experience",
+    subtitle: "Authentic Mexican Experience in Calgary",
     description: "Enjoy the best Mexican food in a cozy atmosphere with exceptional service",
     cta: "Book a Table",
     link: "/restaurant",
@@ -112,9 +112,15 @@ const HeroSlider = () => {
                 <span className="inline-block bg-secondary text-secondary-foreground px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold mb-3 md:mb-4 animate-fade-in">
                   {slide.title}
                 </span>
-                <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-3 md:mb-4 hero-text-shadow leading-tight">
-                  {slide.subtitle}
-                </h1>
+                {index === 0 ? (
+                  <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-3 md:mb-4 hero-text-shadow leading-tight">
+                    {slide.subtitle}
+                  </h1>
+                ) : (
+                  <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-3 md:mb-4 hero-text-shadow leading-tight">
+                    {slide.subtitle}
+                  </h2>
+                )}
                 <p className="text-base md:text-lg lg:text-xl text-card/90 mb-6 md:mb-8 max-w-lg">
                   {slide.description}
                 </p>
