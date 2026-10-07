@@ -243,8 +243,8 @@ const Index = () => {
                     <Clock className="text-primary" size={20} />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm md:text-base">Extended Hours</p>
-                    <p className="text-muted-foreground text-xs md:text-sm">Open until 11pm on weekends</p>
+                    <p className="font-semibold text-foreground text-sm md:text-base">Restaurant Hours</p>
+                    <p className="text-muted-foreground text-xs md:text-sm">Thu - Tue: Open | Wed: Closed</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">

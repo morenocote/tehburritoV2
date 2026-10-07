@@ -85,9 +85,21 @@ const Header = () => {
           </nav>
 
           <div className="hidden lg:block">
-            <Button variant="hero" size="lg" onClick={handleCtaClick}>
-              {cta.text}
-            </Button>
+            {cta.text === "Order Now" ? (
+              <Button variant="hero" size="lg" asChild>
+                <a
+                  href="https://fromtherestaurant.com/the-burrito-mexican-food/locations/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {cta.text}
+                </a>
+              </Button>
+            ) : (
+              <Button variant="hero" size="lg" onClick={handleCtaClick}>
+                {cta.text}
+              </Button>
+            )}
           </div>
 
           <button
@@ -115,9 +127,22 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <Button variant="default" size="lg" className="w-full mt-4" onClick={handleCtaClick}>
-                {cta.text}
-              </Button>
+              {cta.text === "Order Now" ? (
+                <Button variant="default" size="lg" className="w-full mt-4" asChild>
+                  <a
+                    href="https://fromtherestaurant.com/the-burrito-mexican-food/locations/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {cta.text}
+                  </a>
+                </Button>
+              ) : (
+                <Button variant="default" size="lg" className="w-full mt-4" onClick={handleCtaClick}>
+                  {cta.text}
+                </Button>
+              )}
             </nav>
           </div>
         )}
